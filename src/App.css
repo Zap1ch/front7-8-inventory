@@ -6,7 +6,7 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: #f3f6fa;
-  color: #222;
+  color: #111827;
 }
 
 .app {
@@ -14,66 +14,100 @@ body {
 }
 
 .header {
-  background: #1f2937;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
   color: white;
-  padding: 20px 40px;
+  padding: 22px 48px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-icon {
+  font-size: 42px;
+  font-weight: bold;
+}
+
 .header h1 {
   margin: 0;
+  font-size: 34px;
 }
 
 .header nav {
   display: flex;
-  gap: 15px;
+  gap: 16px;
 }
 
 .header a {
   color: white;
   text-decoration: none;
   font-weight: bold;
+  padding: 12px 18px;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.header a:hover {
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .main {
-  max-width: 1100px;
-  margin: 30px auto;
+  max-width: 1180px;
+  margin: 32px auto;
+  padding: 0 20px;
+}
+
+.main > div {
   background: white;
-  padding: 25px;
-  border-radius: 14px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 32px;
+  color: #111827;
 }
 
 .inventory-table {
   width: 100%;
   border-collapse: collapse;
-}
-
-.inventory-table th,
-.inventory-table td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
+  overflow: hidden;
+  border-radius: 12px;
 }
 
 .inventory-table th {
-  background: #eef2f7;
+  background: #f1f5f9;
+  padding: 16px;
+  text-align: left;
+  font-size: 17px;
+}
+
+.inventory-table td {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
 }
 
 .preview-img {
-  width: 80px;
-  height: 60px;
+  width: 90px;
+  height: 70px;
   object-fit: cover;
-  border-radius: 8px;
-  background: #ddd;
+  border-radius: 10px;
+  background: #e5e7eb;
 }
 
 .actions {
   display: flex;
   gap: 10px;
-  align-items: center;
+  flex-wrap: wrap;
 }
 
 .actions a,
@@ -82,11 +116,12 @@ body {
 .secondary-btn,
 .danger-btn {
   border: none;
-  padding: 9px 12px;
-  border-radius: 8px;
+  padding: 11px 15px;
+  border-radius: 9px;
   cursor: pointer;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .actions a,
@@ -95,10 +130,20 @@ body {
   color: white;
 }
 
+.actions a:hover,
+.primary-btn:hover {
+  background: #1d4ed8;
+}
+
 .actions button,
 .danger-btn {
   background: #dc2626;
   color: white;
+}
+
+.actions button:hover,
+.danger-btn:hover {
+  background: #b91c1c;
 }
 
 .secondary-btn {
@@ -109,27 +154,36 @@ body {
 .inventory-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .inventory-form label {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   font-weight: bold;
+  color: #111827;
 }
 
 .inventory-form input,
 .inventory-form textarea {
-  padding: 10px;
-  border: 1px solid #cfd6dd;
-  border-radius: 8px;
-  font-size: 15px;
+  padding: 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 16px;
+  background: white;
+  color: #111827;
 }
 
 .inventory-form textarea {
-  min-height: 100px;
+  min-height: 120px;
   resize: vertical;
+}
+
+.inventory-form input:focus,
+.inventory-form textarea:focus {
+  outline: none;
+  border-color: #2563eb;
 }
 
 .form-error,
@@ -145,16 +199,16 @@ body {
 
 .details-card {
   display: flex;
-  gap: 25px;
+  gap: 28px;
   align-items: flex-start;
 }
 
 .details-img {
   width: 360px;
   max-width: 100%;
-  border-radius: 14px;
+  border-radius: 16px;
   object-fit: cover;
-  background: #ddd;
+  background: #e5e7eb;
 }
 
 .back-link {
@@ -167,9 +221,10 @@ body {
 
 .photo-update {
   margin-top: 25px;
-  padding: 18px;
+  padding: 20px;
   background: #f8fafc;
-  border-radius: 12px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
 }
 
 .hint {
@@ -180,18 +235,18 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(15, 23, 42, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .modal {
-  width: 420px;
+  width: 430px;
   background: white;
-  padding: 25px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
 }
 
 .modal-actions {

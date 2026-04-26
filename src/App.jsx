@@ -9,11 +9,14 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>Адмін-панель складу</h1>
+        <div className="logo">
+          <span className="logo-icon">▧</span>
+          <h1>Адмін-панель складу</h1>
+        </div>
 
         <nav>
           <Link to="/">Інвентар</Link>
-          <Link to="/create">Додати позицію</Link>
+          <Link to="/create">+ Додати позицію</Link>
         </nav>
       </header>
 
