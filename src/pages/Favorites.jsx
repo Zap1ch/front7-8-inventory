@@ -1,20 +1,34 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InventoryGallery from "../components/gallery/InventoryGallery";
 import InventoryQuickView from "../components/gallery/InventoryQuickView";
 import useFavorites from "../hooks/useFavorites";
 import { useInventory } from "../store/InventoryContext";
 
 function Favorites() {
-  const { favorites, toggleFavorite, removeFavorite, isFavorite } =
-    useFavorites();
+  const {
+    favoriteIds,
+    toggleFavorite,
+    removeFavorite,
+    isFavorite,
+    syncFavoritesWithInventory,
+  } = useFavorites();
 
-  const { inventory, loading, error } = useInventory();
-
+  const { inventory, loading, error, fetchInventory } = useInventory();
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const existingFavorites = favorites.filter((favorite) =>
-    inventory.some((item) => item.id === favorite.id)
+  useEffect(() => {
+    fetchInventory();
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      syncFavoritesWithInventory(inventory);
+    }
+  }, [loading, inventory]);
+
+  const favoriteItems = inventory.filter((item) =>
+    favoriteIds.includes(item.id)
   );
 
   function handleRemoveFavorite(item) {
@@ -27,7 +41,7 @@ function Favorites() {
         <div className="favorites-page-header">
           <div>
             <h2>Улюблені інвентарі</h2>
-            <p>Завантаження улюблених позицій...</p>
+            <p>Завантаження актуальних даних...</p>
           </div>
 
           <Link to="/gallery" className="back-to-gallery">
@@ -71,7 +85,10 @@ function Favorites() {
       <div className="favorites-page-header">
         <div>
           <h2>Улюблені інвентарі</h2>
-          <p>Тут відображаються тільки ті улюблені позиції, які ще існують.</p>
+          <p>
+            Тут відображаються тільки актуальні товари, які існують у списку
+            інвентарю.
+          </p>
         </div>
 
         <Link to="/gallery" className="back-to-gallery">
@@ -79,17 +96,14 @@ function Favorites() {
         </Link>
       </div>
 
-      {existingFavorites.length === 0 ? (
+      {favoriteItems.length === 0 ? (
         <div className="gallery-state">
           <h2>Улюблені відсутні</h2>
-          <p>
-            Додайте інвентар у список улюблених з галереї або перевірте, чи ці
-            позиції ще не були видалені.
-          </p>
+          <p>Додайте інвентар у список улюблених з галереї.</p>
         </div>
       ) : (
         <InventoryGallery
-          inventory={existingFavorites}
+          inventory={favoriteItems}
           onOpen={setSelectedItem}
           onToggleFavorite={handleRemoveFavorite}
           isFavorite={isFavorite}

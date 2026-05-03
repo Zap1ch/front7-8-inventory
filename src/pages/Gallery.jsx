@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InventoryGallery from "../components/gallery/InventoryGallery";
 import InventoryQuickView from "../components/gallery/InventoryQuickView";
 import FavoritesBar from "../components/gallery/FavoritesBar";
@@ -6,14 +6,36 @@ import useFavorites from "../hooks/useFavorites";
 import { useInventory } from "../store/InventoryContext";
 
 function Gallery() {
-  const { inventory, loading, error } = useInventory();
-  const { favorites, toggleFavorite, isFavorite } = useFavorites();
+  const { inventory, loading, error, fetchInventory } = useInventory();
+
+  const {
+    favoriteIds,
+    toggleFavorite,
+    isFavorite,
+    syncFavoritesWithInventory,
+  } = useFavorites();
+
   const [selectedItem, setSelectedItem] = useState(null);
+
+  useEffect(() => {
+    fetchInventory();
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      syncFavoritesWithInventory(inventory);
+    }
+  }, [loading, inventory]);
+
+  const favoriteCount = inventory.filter((item) =>
+    favoriteIds.includes(item.id)
+  ).length;
 
   if (loading) {
     return (
       <div>
-        <FavoritesBar count={favorites.length} />
+        <FavoritesBar count={favoriteCount} />
+
         <div className="skeleton-grid">
           <div className="skeleton-card"></div>
           <div className="skeleton-card"></div>
@@ -26,7 +48,8 @@ function Gallery() {
   if (error) {
     return (
       <div>
-        <FavoritesBar count={favorites.length} />
+        <FavoritesBar count={favoriteCount} />
+
         <div className="gallery-state error-state">
           <h2>Помилка завантаження</h2>
           <p>{error}</p>
@@ -37,7 +60,7 @@ function Gallery() {
 
   return (
     <div>
-      <FavoritesBar count={favorites.length} />
+      <FavoritesBar count={favoriteCount} />
 
       <InventoryGallery
         inventory={inventory}
