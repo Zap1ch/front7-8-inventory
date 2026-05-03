@@ -3,6 +3,8 @@ import AdminInventory from "./pages/AdminInventory";
 import AdminInventoryCreate from "./pages/AdminInventoryCreate";
 import AdminInventoryEdit from "./pages/AdminInventoryEdit";
 import AdminInventoryDetails from "./pages/AdminInventoryDetails";
+import Gallery from "./pages/Gallery";
+import Favorites from "./pages/Favorites";
 import "./App.css";
 
 function App() {
@@ -11,12 +13,14 @@ function App() {
       <header className="header">
         <div className="logo">
           <span className="logo-icon">▧</span>
-          <h1>Адмін-панель складу</h1>
+          <h1>Система складу</h1>
         </div>
 
         <nav>
-          <Link to="/">Інвентар</Link>
+          <Link to="/">Адмін-панель</Link>
           <Link to="/create">+ Додати позицію</Link>
+          <Link to="/gallery">Галерея</Link>
+          <Link to="/favorites">Улюблені</Link>
         </nav>
       </header>
 
@@ -26,6 +30,9 @@ function App() {
           <Route path="/create" element={<AdminInventoryCreate />} />
           <Route path="/inventory/:id" element={<AdminInventoryDetails />} />
           <Route path="/inventory/:id/edit" element={<AdminInventoryEdit />} />
+
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </main>
     </div>
