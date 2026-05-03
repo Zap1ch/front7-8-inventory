@@ -10,7 +10,7 @@ function ConfirmModal({ item, onConfirm, onCancel }) {
 
         <p>
           Ви дійсно хочете видалити інвентар:
-          <strong> {item.inventory_name}</strong>?
+          <strong> {item.name}</strong>?
         </p>
 
         <div className="modal-actions">
